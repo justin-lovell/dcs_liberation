@@ -80,11 +80,17 @@ local function discoverDebriefingFilePath()
         logger:info("Using DCS working directory for state.json")
         return insertFileName(lfs.writedir())
     end
+
+    return nil
 end
 
 
 debriefing_file_location = discoverDebriefingFilePath()
-logger:info(string.format("DCS Liberation state will be written as json to [[%s]]",debriefing_file_location))
+if debriefing_file_location then
+    logger:info(string.format("DCS Liberation state will be written as json to [[%s]]",debriefing_file_location))
+else
+    logger:error("No usable storage path for state.json")
+end
 
 
 write_state_error_handling = function()
